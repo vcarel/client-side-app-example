@@ -17,11 +17,17 @@ module.exports = function (grunt) {
                 },
                 src: 'Gruntfile.js'
             },
-            js: {
+            src: {
                 options: {
                     jshintrc: 'src/js/.jshintrc'
                 },
                 src: 'src/js/**/*.js'
+            },
+            test: {
+                options: {
+                    jshintrc: 'test/.jshintrc'
+                },
+                src: 'test/**/*.js'
             }
         },
         clean: {
@@ -37,9 +43,13 @@ module.exports = function (grunt) {
                 files: 'Gruntfile.js',
                 tasks: ['jshint:gruntfile']
             },
-            js: {
+            js_src: {
                 files: 'src/js/**',
-                tasks: ['jshint:js', 'webmake', 'uglify']
+                tasks: ['jshint:src', 'webmake', 'uglify', 'mochaTest']
+            },
+            js_test: {
+                files: 'test/**',
+                tasks: ['jshint:test', 'mochaTest']
             },
             stylus: {
                 files: 'src/styl/**',
@@ -140,6 +150,14 @@ module.exports = function (grunt) {
                     src: '**'
                 }]
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec'
+                },
+                src: ['test/**/*.js']
+            }
         }
     });
 
@@ -153,6 +171,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-stylus');
     grunt.loadNpmTasks('grunt-mustache-render');
 
+    // Test
+    grunt.loadNpmTasks('grunt-mocha-test');
+
     // Minify
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -162,8 +183,9 @@ module.exports = function (grunt) {
     // Dist
     grunt.loadNpmTasks('grunt-contrib-compress');
 
-    grunt.registerTask('compile', ['clean:compile', 'jshint:js', 'webmake', 'stylus', 'mustache_render', 'copy:compile']);
+    grunt.registerTask('compile', ['clean:compile', 'jshint:src', 'webmake', 'stylus', 'mustache_render', 'copy:compile']);
     grunt.registerTask('minify', ['compile', 'clean:minify', 'uglify', 'cssmin', 'htmlmin', 'copy:minify']);
-    grunt.registerTask('dist', ['minify', 'compress:dist']);
-    grunt.registerTask('default', ['jshint:gruntfile', 'minify']);
+    grunt.registerTask('test', ['compile', 'jshint:test', 'mochaTest']);
+    grunt.registerTask('dist', ['test', 'minify', 'compress:dist']);
+    grunt.registerTask('default', ['jshint:gruntfile', 'test', 'minify']);
 };
