@@ -2,10 +2,10 @@ module.exports = function (grunt) {
 
     var pkg = grunt.file.readJSON('package.json');
     var dirs = {
-        compile: 'build/compile',
-        minify: 'build/minify',
-        resource: 'resource_' + pkg.version,
-        dist: 'dist'
+        compile: 'build/compile/',
+        minify: 'build/minify/',
+        resource: 'resource_' + pkg.version + '/',
+        dist: 'dist/'
     };
 
     grunt.initConfig({
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         webmake: {
             compile: {
                 files: {
-                    '<%= dirs.compile %>/<%= dirs.resource %>/main.js': 'src/js/main.js'
+                    '<%= dirs.compile %><%= dirs.resource %>main.js': 'src/js/main.js'
                 }
             }
         },
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
                     'include css': true
                 },
                 files: {
-                    '<%= dirs.compile %>/<%= dirs.resource %>/css/main.css': 'src/styl/main.styl'
+                    '<%= dirs.compile %><%= dirs.resource %>css/main.css': 'src/styl/main.styl'
                 }
             }
         },
@@ -77,27 +77,27 @@ module.exports = function (grunt) {
             compile: {
                 files: [{
                     data: {
-                        css_dir: dirs.resource + '/css',
-                        img_dir: dirs.resource + '/img',
+                        css_dir: dirs.resource + 'css',
+                        img_dir: dirs.resource + 'img',
                         js_dir: dirs.resource
                     },
                     template: 'src/main.mustache',
-                    dest: dirs.compile + '/main.html'
+                    dest: dirs.compile + 'main.html'
                 }]
             }
         },
         uglify: {
             minify: {
                 files: {
-                    '<%= dirs.minify %>/<%= dirs.resource %>/main.js': dirs.compile + '/' + dirs.resource + '/main.js'
+                    '<%= dirs.minify %><%= dirs.resource %>main.js': dirs.compile + dirs.resource + 'main.js'
                 }
             }
         },
         cssmin: {
             minify: {
                 expand: false,
-                src: dirs.compile + '/' + dirs.resource + '/css/main.css',
-                dest: dirs.minify + '/' + dirs.resource + '/css/main.css'
+                src: dirs.compile + dirs.resource + 'css/main.css',
+                dest: dirs.minify + dirs.resource + 'css/main.css'
             }
         },
         htmlmin: {
@@ -108,7 +108,7 @@ module.exports = function (grunt) {
                     removeAttributeQuotes: true
                 },
                 files: {
-                    '<%= dirs.minify %>/main.html': dirs.compile + '/main.html',
+                    '<%= dirs.minify %>/main.html': dirs.compile + 'main.html'
                 }
             }
         },
@@ -118,21 +118,21 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'src',
                     src: 'img/**',
-                    dest: dirs.compile + '/' + dirs.resource
+                    dest: dirs.compile + dirs.resource
                 }]
 
             },
             minify: {
                 expand: true,
-                cwd: dirs.compile + '/' + dirs.resource,
+                cwd: dirs.compile + dirs.resource,
                 src: 'img/**',
-                dest: dirs.minify + '/' + dirs.resource
+                dest: dirs.minify + dirs.resource
             }
         },
         compress: {
             dist: {
                 options: {
-                    archive: dirs.dist + '/' + pkg.name + '_' + pkg.version + '.zip'
+                    archive: dirs.dist + pkg.name + '_' + pkg.version + '.zip'
                 },
                 files: [{
                     expand: true,
