@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     var dirs = {
         compile: 'build/compile',
         minify: 'build/minify',
-        ressource: 'ressource_' + pkg.version,
+        resource: 'resource_' + pkg.version,
         dist: 'dist'
     };
 
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         webmake: {
             compile: {
                 files: {
-                    '<%= dirs.compile %>/<%= dirs.ressource %>/main.js': 'src/js/main.js'
+                    '<%= dirs.compile %>/<%= dirs.resource %>/main.js': 'src/js/main.js'
                 }
             }
         },
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
                     'include css': true
                 },
                 files: {
-                    '<%= dirs.compile %>/<%= dirs.ressource %>/css/main.css': 'src/styl/main.styl'
+                    '<%= dirs.compile %>/<%= dirs.resource %>/css/main.css': 'src/styl/main.styl'
                 }
             }
         },
@@ -77,9 +77,9 @@ module.exports = function (grunt) {
             compile: {
                 files: [{
                     data: {
-                        css_dir: dirs.ressource + '/css',
-                        img_dir: dirs.ressource + '/img',
-                        js_dir: dirs.ressource
+                        css_dir: dirs.resource + '/css',
+                        img_dir: dirs.resource + '/img',
+                        js_dir: dirs.resource
                     },
                     template: 'src/main.mustache',
                     dest: dirs.compile + '/main.html'
@@ -89,15 +89,15 @@ module.exports = function (grunt) {
         uglify: {
             minify: {
                 files: {
-                    '<%= dirs.minify %>/<%= dirs.ressource %>/main.js': dirs.compile + '/' + dirs.ressource + '/main.js'
+                    '<%= dirs.minify %>/<%= dirs.resource %>/main.js': dirs.compile + '/' + dirs.resource + '/main.js'
                 }
             }
         },
         cssmin: {
             minify: {
                 expand: false,
-                src: dirs.compile + '/' + dirs.ressource + '/css/main.css',
-                dest: dirs.minify + '/' + dirs.ressource + '/css/main.css'
+                src: dirs.compile + '/' + dirs.resource + '/css/main.css',
+                dest: dirs.minify + '/' + dirs.resource + '/css/main.css'
             }
         },
         htmlmin: {
@@ -118,15 +118,15 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'src',
                     src: 'img/**',
-                    dest: dirs.compile + '/' + dirs.ressource
+                    dest: dirs.compile + '/' + dirs.resource
                 }]
 
             },
             minify: {
                 expand: true,
-                cwd: dirs.compile + '/' + dirs.ressource,
+                cwd: dirs.compile + '/' + dirs.resource,
                 src: 'img/**',
-                dest: dirs.minify + '/' + dirs.ressource
+                dest: dirs.minify + '/' + dirs.resource
             }
         },
         compress: {
