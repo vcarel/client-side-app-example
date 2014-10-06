@@ -15,7 +15,7 @@ That's [Gulp](http://gulpjs.com/) which builds the project's distributables. It 
 1. **build** : generates HTML, JS and CSS files and copy the images into ```build/compile```. Then it minifies / uglifies everything into ```build/minify```
 2. **dist** : creates a zip archive into the ```dist``` folder
 
-By default, Gulp displays the available tasks.
+By default, it displays the available tasks.
 
 While developping, ```gulp watch``` will re-execute any needed task on the fly when the source code is modified.
 
