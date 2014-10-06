@@ -6,19 +6,18 @@ As a prerequisite, the latest version of [node.js](http://nodejs.org) must be in
 Then, from the project's root folder:
 ```
 npm install
-sudo npm install -g grunt-cli
-grunt
+alias gulp=`pwd`/node_modules/.bin/gulp
+gulp build
 ```
 
-That's [Grunt](http://gruntjs.com/) which builds the project's distributables. It is configured to work in 3 steps :
+That's [Gulp](http://gulpjs.com/) which builds the project's distributables. It is configured to work in 2 steps :
 
-1. **compile** : generates HTML, JS and CSS files and copy the images into ```build/compile```
-2. **minify** : minifies / uglifies everything into ```build/minify```
-3. **dist** : creates a zip archive into the ```dist``` folder
+1. **build** : generates HTML, JS and CSS files and copy the images into ```build/compile```. Then it minifies / uglifies everything into ```build/minify```
+2. **dist** : creates a zip archive into the ```dist``` folder
 
-By default, Grunt executes the **minify** task.
+By default, Gulp displays the available tasks.
 
-While developping, ```grunt watch``` will re-execute any needed task on the fly when the source code is modified.
+While developping, ```gulp watch``` will re-execute any needed task on the fly when the source code is modified.
 
 
 # Under the hood
@@ -27,7 +26,7 @@ There's no HTML. Instead, there's a [main.mustache](src/main.mustache) which is 
 
 There no CSS as well. We use the [Stylus](http://learnboost.github.io/stylus/) preprocessor to make them.
 
-There are JS files, but they are organised as modules. And, at the end, there's only 1 JS file in the bundle. That's the job of [Webmake](https://github.com/medikoo/modules-webmake) to assemble those. Its syntax is pretty close to node.js, so it should be of no surprise.
+There are JS files, but they are organised as modules. And, at the end, there's only 1 JS file in the bundle. That's the job of [Webmake](https://github.com/medikoo/modules-webmake) to assemble those. Its syntax is pretty close to node.js / browserify, so it should be of no surprise.
 
 
 # How to make a release
@@ -48,10 +47,9 @@ becomes
 
 That's a good time to make the distributable archive :
 
-    grunt dist
+    gulp clean && gulp dist
 
 **Step 4.** Increase the version number and put the "-SNAPSHOT" back again. Commit the result.
-
 
 **Step 5.** Push the changes along with the tags :
 
