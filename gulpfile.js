@@ -118,7 +118,7 @@ gulp.task('dist', ['build'], function () {
     return gulp.src(dirs.minify + '**')
         .pipe(tar(pkg.name + '_' + pkg.version + '.tar'))
         .pipe(gzip())
-        .pipe(print())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'))
+        .pipe(print());
 });
 
